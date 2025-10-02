@@ -1,0 +1,16 @@
+@import url('./static/fonts/iconfont/style.css');
+@import "tailwindcss";
+
+* {
+  font-family: var(--main-font);
+  box-sizing: border-box;
+}
+
+:root {
+  --main-font: 'Arial', sans-serif;
+  --main-color: #005FD4;
+  --hover-color: #dba310;
+  --black-color: #202020;
+  --iconfont: 'iconfont';
+}
+

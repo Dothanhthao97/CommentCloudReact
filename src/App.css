@@ -1,0 +1,4 @@
+.beforeYellow, .beforeYellow::before{color: var(--color-yellow-400) !important}
+.beforeGreen, .beforeGreen::before{color: #77E075 !important}
+.beforeRed, .beforeRed::before{color: #FF6B6B !important}
+

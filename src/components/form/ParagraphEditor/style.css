@@ -1,0 +1,18 @@
+.boxEditorComt .MuiTiptap-FieldContainer-root,.tiptap{height: 100%;}
+.boxEditorComt .css-bllqbn-MuiTiptap-MenuControlsContainer-root{gap: 8px}
+.boxEditorComt .MuiTiptap-RichTextContent-root.MuiTiptap-RichTextField-content{padding: 0;height: 100%;}
+.boxEditorComt .MuiTiptap-FieldContainer-notchedOutline{border-width: 0}
+.boxEditorComt .css-1gc8rgj-MuiTiptap-FieldContainer-root-MuiTiptap-RichTextField-root .MuiTiptap-RichTextField-menuBarContent{padding: 0}
+.boxEditorComt .MuiTiptap-MenuBar-content.MuiTiptap-RichTextField-menuBarContent{padding: 0}
+.boxEditorComt .MuiTiptap-RichTextField-menuBar{border-bottom: 0}
+.boxEditorComt .MuiTiptap-MenuSelect-tooltip .MuiTiptap-MenuSelectHeading-root{border: 1px solid #eee;border-radius: 5px}
+.boxEditorComt .MuiTiptap-MenuSelect-tooltip .MuiTiptap-MenuSelectHeading-root:hover{border-color: var(--color-blue-600)}
+.boxEditorComt .tiptap p{height: 100%;padding-block:4px;}
+.boxEditorComt.flex-col .MuiTiptap-RichTextContent-root.MuiTiptap-RichTextField-content,.boxEditorComt.flex-col .MuiTiptap-RichTextContent-root.MuiTiptap-RichTextField-content{height: unset}
+.boxEditorComt.flex-col .tiptap p{padding-top:10px;}
+.boxEditorComt .css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline{border-width: 0;}
+.boxEditorComt .MuiTiptap-MenuSelectHeading-root .MuiSelect-select{padding-block: 1px}
+.boxEditorComt .css-2rzjok-MuiTiptap-MenuButton-root.css-2rzjok-MuiTiptap-MenuButton-root .MuiToggleButton-root{padding: 3px}
+.tippy-box:has(.mention-dropdown:empty){display: none}
+/* Base styles for Tiptap editor */
+
