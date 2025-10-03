@@ -5,7 +5,11 @@ import { watchLoginSaga } from "../services/login/loginSaga";
 import commentSaga from "../components/CommentBox/commentSaga";
 
 export default function* rootSaga() {
-  yield all([fork(formCommentSaga), fork(watchLoginSaga),fork(commentSaga),]);
+  yield all([
+    fork(formCommentSaga),
+    fork(watchLoginSaga),
+    fork(commentSaga),
+  ]);
   
 }
 

@@ -27,7 +27,7 @@ const CirculateInforModal = () => {
   const [rootSteps, setRootSteps] = useState<StepItem[]>([]);
 
   // Hàm xử lý class theo status
-  const getSubmitActionBgClass = (status: number, submitActionId: number) => {
+  const GetSubmitActionBgClass = (status: number, submitActionId: number) => {
     if (status === 1) return "bg-green-100";
     if (submitActionId === 2) return "bg-yellow-100";
     return "";

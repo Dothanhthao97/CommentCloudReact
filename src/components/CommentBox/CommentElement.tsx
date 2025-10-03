@@ -28,6 +28,8 @@ const CommentElement: React.FC<CommentElementProps> = ({
   const initialLikeCount = commentData.LikeCount ?? 0;
   const [likeCount, setLikeCount] = useState<number>(initialLikeCount);
   const [liked, setLiked] = useState<boolean>(commentData?.IsLiked);
+  const hasParent = Boolean(commentData.ParentCommentId);
+  const [showParent, setShowParent] = useState(hasParent);
 
   const handleLikeClick = async () => {
     const newLiked = !liked;
@@ -61,8 +63,6 @@ const CommentElement: React.FC<CommentElementProps> = ({
     [commentData.ParentCommentId, allComments]
   );
 
-  const hasParent = Boolean(commentData.ParentCommentId);
-  const [showParent, setShowParent] = useState(hasParent);
   useEffect(() => {
     setShowParent(hasParent);
   }, [hasParent]);
@@ -76,7 +76,7 @@ const CommentElement: React.FC<CommentElementProps> = ({
 
   return (
     <>
-      <div className="flex gap-2.5 p-4">
+      <div className="flex gap-2.5 py-3">
         <div>
           <a
             href="#"
@@ -106,7 +106,7 @@ const CommentElement: React.FC<CommentElementProps> = ({
             </div>
           </div>
 
-          <div className="flex flex-wrap flex-col gap-2.5 bg-[#F8F8F8] w-full shadow-[0_0_4px_0_#F8F8F8] rounded-lg p-4">
+          <div className="flex flex-wrap flex-col gap-2.5 bg-[#F8F8F8] w-full shadow-[0_0_4px_0_#F8F8F8] rounded-lg p-3">
             {/* Nếu là comment con, hiển thị trích dẫn cha */}
             {parentComment && (
               <BoxReply
@@ -126,7 +126,7 @@ const CommentElement: React.FC<CommentElementProps> = ({
               ))}
             </div>
 
-            <div className="inline-flex items-center py-1 px-4 gap-5 rounded-2xl border border-[#EBEBEB] bg-[#fff] shadow-[0_0_5px_0_rgba(0,95,212,0.20)] absolute bottom-[-11px] left-3.5">
+            <div className="divGroupBtn inline-flex items-center py-1 px-4 gap-5 rounded-2xl border border-[#EBEBEB] bg-[#fff] shadow-[0_0_5px_0_rgba(0,95,212,0.20)] absolute bottom-[-11px] left-3.5">
               <Button
                 className="btn-reply text-[#64748B] hover:text-blue-500"
                 icon="ic-forward1 ic-forward-inf scale-x-[-1] scale-y-[-1]"

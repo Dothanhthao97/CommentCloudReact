@@ -7,6 +7,7 @@ type HeaderToggleProps = {
   title?: string;
   children?: React.ReactNode;
   className?: string;
+  BoxclassName?: string;
   showButton?: boolean;
   isOpen?: boolean; // <-- trạng thái mở được truyền từ cha
   onToggle?: (isOpen: boolean) => void; // <-- sự kiện toggle
@@ -16,6 +17,7 @@ function HeaderToggle({
   title,
   children,
   className,
+  BoxclassName = "",
   showButton,
   isOpen,
   onToggle,
@@ -36,16 +38,18 @@ function HeaderToggle({
       setExpanded(!isExpanded);
     }
   };
+  // console.log("BoxclassName received:", BoxclassName);
+  // console.log("👉 Rendering HeaderToggle from UI/Toggle");
 
   return (
-    <>
+    <div className={BoxclassName}>
       <div className="flex gap-3 border-b border-b-gray-200">
         <div onClick={handleToggle}>
           <div
             className={`inline-flex items-center gap-2.5 cursor-pointer py-2.5 ${className}`}
           >
             <Button
-              className={`p-2`}
+              className={`p-2 toggle-button`}
               icon={
                 isExpanded ? "ic-expand text-[8px]" : "ic-collapse  text-[8px]"
               }
@@ -59,7 +63,7 @@ function HeaderToggle({
       </div>
 
       <div {...getCollapseProps()}>{children}</div>
-    </>
+    </div>
   );
 }
 

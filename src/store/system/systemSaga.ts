@@ -1,6 +1,6 @@
 // src/features/formComment/formCommentSaga.ts
 
-import { call, put, takeLatest, all, fork } from "redux-saga/effects";
+import { call, put, takeLatest, all, fork, select } from "redux-saga/effects";
 import { SagaIterator } from "redux-saga";
 import { getAPI } from "../../services/api/GetAPI";
 import {
@@ -11,21 +11,34 @@ import {
   fetchFormDataSuccess,
   fetchFormDataFailure,
 } from "./systemSlice";
+import { useAppSelector } from "../hook";
+import { RootState } from "../store";
+// Selectors
+const getListID = (state: RootState) => state.formComment.ListID;
+const getItemID = (state: RootState) => state.formComment.ItemID;
 
 // -- FETCH STRUCTURE -- //
 function* fetchFormStructureSaga(): SagaIterator {
-  try {
+  try {    
+    const ListID: string | null = yield select(getListID);
+    if (!ListID) {
+      yield put(fetchFormStructureFailure("Missing ListID"));
+      return;
+    }
     const res = yield call(getAPI,
-      "/api-social/qc/_layouts/15/FN.DPM.API/Mobile/WorkflowRequest.ashx",
+      "https://dpmclouddev.vuthao.com/support/_layouts/15/FN.DPM.API/Mobile/WorkflowRequest.ashx",
       {
         func: "getFormTemplate",
         lid: 1066,
-        listid: "2342c063-8c15-4d6d-ba5d-d15b6f27a21d",
+        listid: ListID,
+        deviceType: 1,
       }
     );
-
+    
+    console.log(">>> Full API response FormStructure:", res.data);
     const FormDefineInfo = res.data?.InfoCollection?.FormDefineInfo;
-    const FormFieldInfo = res.data?.FormFieldInfo;
+    const FormFieldInfo = res.data?.FormFieldInfo;  
+    console.log(">>> FormDefineInfo:", FormFieldInfo);
 
     // Step 1: Map field name => field detail
     const fieldInfoMap = new Map<string, any>();
@@ -51,7 +64,6 @@ function* fetchFormStructureSaga(): SagaIterator {
         }
     });
 
-
     let titleForm = "";
     let fieldsGroup: any[][] = [];
 
@@ -68,9 +80,9 @@ function* fetchFormStructureSaga(): SagaIterator {
           !group.some((field) =>
             excludedFields.some((prefix) => field.internalName?.startsWith(prefix))
           )
-        );
+        );        
 
-        // Step 3: Gộp thêm thông tin chi tiết vào từng field
+        // // Step 3: Gộp thêm thông tin chi tiết vào từng field
         fieldsGroup = filteredGroups.map((group: any[]) =>
             group.map((field: any) => {
                 const matchKey = field.internalName || field.Name;
@@ -82,7 +94,8 @@ function* fetchFormStructureSaga(): SagaIterator {
                 };
             })
           );
-          //console.log("Field after merge:", fieldsGroup?.[0]?.[0]);          
+        console.log("Field after merge:", fieldsGroup?.[0]?.[0]);   
+        console.log("fieldsGroup:", fieldsGroup);
       } catch (error) {
         yield put(fetchFormStructureFailure("Lỗi parse dữ liệu cấu trúc form"));
         return;
@@ -93,19 +106,27 @@ function* fetchFormStructureSaga(): SagaIterator {
   } catch (error: any) {
     yield put(fetchFormStructureFailure(error.message || "Lỗi tải cấu trúc form"));
   }
+  
 }
 
 // -- FETCH DATA -- //
 function* fetchFormDataSaga(): SagaIterator {
   try {
+    const ItemID: number | null = yield select(getItemID);
+    console.log("DEBUG - ListID trong fetchFormStructureSaga:", ItemID);
+    if (!ItemID) {
+      yield put(fetchFormDataFailure("Missing ItemID"));
+      return;
+    }
     const res = yield call(getAPI,
-      "/api-social/qc/_layouts/15/FN.DPM.API/Mobile/WorkflowRequest.ashx",
+      "https://dpmclouddev.vuthao.com/support/_layouts/15/FN.DPM.API/Mobile/WorkflowRequest.ashx",
       {
         func: "getFormData",
         lid: 1066,
-        rid: 124818, // 👈 bạn có thể truyền từ action nếu muốn động
+        rid: ItemID, // 👈 bạn có thể truyền từ action nếu muốn động
       }
     );
+    console.log(">>> API res.data FormData:", res.data);
 
     yield put(fetchFormDataSuccess(res.data));
   } catch (error: any) {

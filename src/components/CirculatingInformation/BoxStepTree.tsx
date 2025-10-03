@@ -8,13 +8,13 @@ import "dayjs/locale/vi"; // ngôn ngữ tiếng Việt
 type BoxStepItemProps = {
   user: StepItem;
   level?: number;
-  getSubmitActionBgClass: (status: number, submitActionId: number) => string;
+  GetSubmitActionBgClass: (status: number, submitActionId: number) => string;
 };
 
 const BoxStepItem: React.FC<BoxStepItemProps> = ({
   user,
   level = 0,
-  getSubmitActionBgClass,
+  GetSubmitActionBgClass,
 }) => {
   dayjs.extend(relativeTime);
   dayjs.locale("vi");
@@ -45,7 +45,7 @@ const BoxStepItem: React.FC<BoxStepItemProps> = ({
 
           <div className="flex gap-1 flex-col">
             <span
-              className={`text-xs text-center whitespace-nowrap rounded-[5px] py-[3px] px-[20px] text-[12px] ${getSubmitActionBgClass(
+              className={`text-xs text-center whitespace-nowrap rounded-[5px] py-[3px] px-[20px] text-[12px] ${GetSubmitActionBgClass(
                 user.Status,
                 user.SubmitActionId
               )}`}
@@ -70,7 +70,7 @@ const BoxStepItem: React.FC<BoxStepItemProps> = ({
             key={child.ID}
             user={child}
             level={level + 1}
-            getSubmitActionBgClass={getSubmitActionBgClass}
+            GetSubmitActionBgClass={GetSubmitActionBgClass}
           />
         ))}
       </div>

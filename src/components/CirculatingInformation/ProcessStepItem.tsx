@@ -15,7 +15,7 @@ const ProcessStepItem: React.FC<ProcessStepProps> = ({
   Status,
   users,
 }) => {
-  function getSubmitActionBgClass(
+  function GetSubmitActionBgClass(
     status: number,
     submitActionId: number
   ): string {
@@ -93,7 +93,7 @@ const ProcessStepItem: React.FC<ProcessStepProps> = ({
           <BoxStepItem
             key={user.ID}
             user={user}
-            getSubmitActionBgClass={getSubmitActionBgClass}
+            GetSubmitActionBgClass={GetSubmitActionBgClass}
           />
         ))}
       </div>

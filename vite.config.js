@@ -12,25 +12,26 @@ export default defineConfig({
     //   fileName: (format) => `my-react-lib.${format}.js`
     // },
     rollupOptions: {
-      external: ['react', 'react-dom'],
-      output: {
-        globals: {
-          react: 'React',
-          'react-dom': 'ReactDOM'
-        }
-      }
+      input: 'index.html',
+      //external: ['react', 'react-dom'],
+      // output: {
+      //   globals: {
+      //     react: 'React',
+      //     'react-dom': 'ReactDOM'
+      //   }
+      // }
     }
   },
   server: {
     https: true,
     proxy: {
       '/api-social': {
-        target: 'https://dpmclouduat.vuthao.com',
+        target: 'https://dpmclouddev.vuthao.com',
         changeOrigin: true,
         secure: false,
         cookieDomainRewrite: {
-          'fniduat.vuthao.com': 'localhost',
-          'dpmclouduat.vuthao.com': 'localhost',
+          'fniddev.vuthao.com': 'localhost',
+          'dpmclouddev.vuthao.com': 'localhost',
           '.vuthao.com': 'localhost'
         },
         cookiePathRewrite: { '/': '/' },

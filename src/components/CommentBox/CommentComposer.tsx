@@ -65,7 +65,7 @@ const CommentComposer: React.FC<CommentComposerProps> = ({
   ];
 
   return (
-    <div className="flex flex-col p-4 mt-4 shadow-md border border-[#eee] rounded-[10px] bg-white w-full">
+    <div className="flex flex-col p-4 mt-3 shadow-md border border-[#eee] rounded-[10px] bg-white w-full">
       {reply && (
         <BoxReply
           FullName={reply.fullName}

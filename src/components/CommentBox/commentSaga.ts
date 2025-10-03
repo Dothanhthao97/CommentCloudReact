@@ -22,7 +22,7 @@ function* handleLogin(): SagaIterator {
       status: "SUCCESS",
       UserId: "fnadmin",
       mess: { Value: "Login thành công" },
-    }; // giả lập
+    };
     if (true || response?.status === "SUCCESS") {
       yield put(loginSuccess());
       yield put(fetchCommentsRequest()); // login xong thì gọi luôn comment
@@ -37,13 +37,14 @@ function* handleLogin(): SagaIterator {
 // -- FETCH COMMENTS SAGA (gộp API vào đây) -- //
 function* handleFetchComments(): SagaIterator {
   try {
+    
     const response = yield call(getAPI,
-      "https://dpmclouddev.vuthao.com/qc/_layouts/15/FN.DPM.API/Mobile/Social.ashx",
+      "https://dpmclouddev.vuthao.com/support/_layouts/15/FN.DPM.API/Mobile/Social.ashx",
       {
         func: "getCommentByOtherResourceId",
         lid: 1066,
-        rid: 10470,
-        otherresourceid: "2342C063-8C15-4D6D-BA5D-D15B6F27A21D",
+        rid: 25927,
+        otherresourceid: "671214a2-0d00-4403-accb-12d736998251",
         resourcecategoryid: 8,
         resourcesubcategoryid: 9,
       }
@@ -64,6 +65,7 @@ function* handleFetchComments(): SagaIterator {
   } catch (error) {
     yield put(fetchCommentsFailure("Fetch comment failed"));
   }
+  //console.log("Fetch comments saga executed");
 }
 
 // -- WATCHERS -- //

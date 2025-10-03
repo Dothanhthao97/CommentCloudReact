@@ -4,7 +4,7 @@ import CommentBox from "./components/CommentBox/CommentBox";
 
 function App() {
   return (
-    <div className="social-main flex flex-col h-full min-h-0">
+    <div className="social-main flex flex-col h-full min-h-0 p-3.5 bg-[#fafafa]">
       <CommentBox />
     </div>
   );

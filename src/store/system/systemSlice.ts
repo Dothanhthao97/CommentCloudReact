@@ -16,6 +16,8 @@ interface FormCommentState {
   loadingData: boolean;
   errorStructure: string | null;
   errorData: string | null;
+  ItemID?: number | null;
+  ListID?: string | null;
 }
 
 const initialState: FormCommentState = {
@@ -26,6 +28,8 @@ const initialState: FormCommentState = {
   loadingData: false,
   errorStructure: null,
   errorData: null,
+  ItemID: null,
+  ListID: null,
 };
 
 const formCommentSlice = createSlice({
@@ -63,6 +67,13 @@ const formCommentSlice = createSlice({
       state.loadingData = false;
       state.errorData = action.payload;
     },
+    fetchSetItemID(state, action: PayloadAction<number | null>) {
+      state.ItemID = action.payload;
+    },
+    fetchSetListID(state, action: PayloadAction<string | null>) {
+      state.ListID = action.payload;
+    }
+
   },
 });
 
@@ -73,6 +84,8 @@ export const {
   fetchFormDataRequest,
   fetchFormDataSuccess,
   fetchFormDataFailure,
+  fetchSetItemID,
+  fetchSetListID
 } = formCommentSlice.actions;
 
 export default formCommentSlice.reducer;

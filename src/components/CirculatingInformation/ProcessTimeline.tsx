@@ -42,11 +42,11 @@ function ProcessTimeline() {
   async function getDataComment() {
     // 2) Lấy dữ liệu BẰNG getAPI
     const res: any = await getAPI(
-      `/api-social/qc/_layouts/15/FN.DPM.API/Mobile/WorkflowRequest.ashx`,
+      `https://dpmclouddev.vuthao.com/support/_layouts/15/FN.DPM.API/Mobile/WorkflowRequest.ashx`,
       {
         func: "getHistory",
         lid: 1066,
-        rid: 124818,
+        rid: 25927,
       }
     );
     //console.log("API Thông tin luân chuyển:", res);
@@ -69,8 +69,9 @@ function ProcessTimeline() {
       showButton
       isOpen={isProcessTimeline}
       onToggle={setIsProcessTimeline}
+      BoxclassName="ProcessTimeline"
     >
-      <ul className="flex flex-col gap-3.5 px-4 pt-4">
+      <ul className="flex flex-col gap-3.5 pl-4 pt-4">
         {steps.map((step) => (
           <ProcessStepItem
             key={step.ID}

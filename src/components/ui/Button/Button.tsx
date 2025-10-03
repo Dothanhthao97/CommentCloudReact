@@ -18,7 +18,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     { className = "", icon, text, classText, noBg, type = "button", ...rest },
     ref
   ) => {
-    const buttonClass = `btn ${
+    const buttonClass = `${
       noBg ? "btn-no-backg" : "btn-backg"
     } ${className}`.trim();
     const hasText = typeof text === "string" && text.trim().length > 0;
