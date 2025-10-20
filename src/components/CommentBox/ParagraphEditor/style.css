@@ -1,0 +1,36 @@
+.boxEditorComt .MuiTiptap-FieldContainer-root,.tiptap{height: 100%;}
+.boxEditorComt .ProseMirror {max-height: 200px;overflow: auto;}
+.boxEditorComt .ProseMirror h1{color: #262626}
+.boxEditorComt .css-bllqbn-MuiTiptap-MenuControlsContainer-root{gap: 8px}
+.boxEditorComt .MuiTiptap-RichTextContent-root.MuiTiptap-RichTextField-content{padding: 0;height: 100%;}
+.boxEditorComt .MuiTiptap-FieldContainer-notchedOutline{border-width: 0}
+.boxEditorComt .css-1gc8rgj-MuiTiptap-FieldContainer-root-MuiTiptap-RichTextField-root .MuiTiptap-RichTextField-menuBarContent{padding: 0}
+.boxEditorComt .MuiTiptap-MenuBar-content.MuiTiptap-RichTextField-menuBarContent{padding: 0}
+.boxEditorComt .MuiTiptap-RichTextField-menuBar{border-bottom: 0}
+.boxEditorComt .MuiTiptap-MenuSelect-tooltip .MuiTiptap-MenuSelectHeading-root{border: 1px solid #eee;border-radius: 5px}
+.boxEditorComt .MuiTiptap-MenuSelect-tooltip .MuiTiptap-MenuSelectHeading-root:hover{border-color: var(--color-blue-600)}
+.boxEditorComt .tiptap p:first-child:last-child{height: 100%;padding-block:4px;}
+.boxEditorComt.flex-col .MuiTiptap-RichTextContent-root.MuiTiptap-RichTextField-content{height: unset;margin-top: 5px}
+.boxEditorComt.flex-col .tiptap p{padding-top:10px;}
+.boxEditorComt .css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline{border-width: 0;}
+.boxEditorComt .MuiTiptap-MenuSelectHeading-root .MuiSelect-select{padding-block: 1px}
+.boxEditorComt .css-2rzjok-MuiTiptap-MenuButton-root.css-2rzjok-MuiTiptap-MenuButton-root .MuiToggleButton-root{padding: 3px}
+.boxEditorComt .css-1q1o5op-MuiTiptap-RichTextContent-root .ProseMirror [data-type="mention"]{padding-block: 3px}
+.boxEditorComt .css-1q1o5op-MuiTiptap-RichTextContent-root .ProseMirror ul, .boxEditorComt .css-1q1o5op-MuiTiptap-RichTextContent-root .ProseMirror ol {
+    padding-left: 20px;
+}
+.boxEditorComt .mention{padding:3px 5px;border-radius: 4px;background-color: rgb(87 171 255 / 10%);cursor: pointer;}
+.tippy-box:has(.mention-dropdown:empty){display: none}
+.des .mention{color: var(--color-blue-500);}
+.des .mention:hover{text-decoration: underline;}
+.ProseMirror {white-space: pre-wrap;}
+div.tippy-box{background: #fff;color: #5a5a5a;box-shadow: 2px 1px 5px rgb(0 0 0 / 30%);}
+.mention-dropdown{max-height: 320px;overflow-y: auto; max-width: 250px;}
+.tippy-box .tippy-arrow{color: #fff;}
+.tippy-box .tippy-content{padding: 0}
+.tippy-box .tippy-content .mention-item{padding:6px 12px;width: 100%;overflow: hidden;text-overflow: ellipsis;}
+.tippy-box .tippy-content .mention-item:hover{background-color: #f5f5f5;cursor: pointer;}
+.tippy-box .tippy-content .mention-item.highlighted {background-color: var(--color-blue-500); color: #fff; }
+.tippy-box .tippy-content .mention-item.selected { background-color: var(--color-blue-600); color: #fff; }
+/* Base styles for Tiptap editor */
+

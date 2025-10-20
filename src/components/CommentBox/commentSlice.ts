@@ -1,5 +1,5 @@
 // commentSlice.ts
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createAction, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { CommentModel } from "../utils/types";
 
 interface CommentState {
@@ -7,6 +7,7 @@ interface CommentState {
   loading: boolean;
   error: string | null;
   isLoggedIn: boolean;
+  otherResourceId: string | null;
 }
 
 const initialState: CommentState = {
@@ -14,6 +15,7 @@ const initialState: CommentState = {
   loading: false,
   error: null,
   isLoggedIn: false,
+  otherResourceId: null,
 };
 
 const commentSlice = createSlice({
@@ -44,6 +46,9 @@ const commentSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
+    setOtherResourceId(state, action: PayloadAction<string | null>) {
+      state.otherResourceId = action.payload;
+    },
   },
 });
 
@@ -51,9 +56,13 @@ export const {
   loginRequest,
   loginSuccess,
   loginFailure,
-  fetchCommentsRequest,
   fetchCommentsSuccess,
   fetchCommentsFailure,
+  setOtherResourceId,
 } = commentSlice.actions;
+// commentSlice.ts
+export const fetchCommentsRequest = createAction<{ ItemId: number }>(
+  "comment/fetchCommentsRequest"
+);
 
 export default commentSlice.reducer;

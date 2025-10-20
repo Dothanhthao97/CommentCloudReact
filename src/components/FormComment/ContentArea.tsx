@@ -8,9 +8,6 @@ function ContentArea() {
       <div className="w-2/3">
         <FormComment />
       </div>
-      <div className="w-1/3 border-l-[1px] border-l-gray-200">
-        <ProcessTimeline />
-      </div>
     </div>
   );
 }

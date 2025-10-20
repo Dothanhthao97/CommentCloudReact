@@ -4,6 +4,7 @@ import React from "react";
 interface RadioProps {
   fieldName: string;
   value?: string;
+  disabled?: boolean;
   options?: { label: string; value: string }[];
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
@@ -11,6 +12,7 @@ interface RadioProps {
 const Radio: React.FC<RadioProps> = ({
   fieldName,
   value,
+  disabled,
   options = [],
   onChange,
 }) => {
@@ -46,6 +48,7 @@ const Radio: React.FC<RadioProps> = ({
               checked={value === option.value}
               onChange={onChange}
               className="form-radio text-blue-500"
+              disabled={disabled}
             />
             <label htmlFor={inputId} className="text-sm text-gray-700">
               {option.label}

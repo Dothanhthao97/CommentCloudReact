@@ -4,10 +4,16 @@ import Input from "../../ui/inputBox/Input";
 interface NumberProps {
   fieldName: string;
   value?: string;
+  disabled?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Number: React.FC<NumberProps> = ({ fieldName, value, onChange }) => {
+const Number: React.FC<NumberProps> = ({
+  fieldName,
+  value,
+  disabled,
+  onChange,
+}) => {
   return (
     <Input
       name={fieldName}
@@ -15,6 +21,7 @@ const Number: React.FC<NumberProps> = ({ fieldName, value, onChange }) => {
       id={fieldName} // id cho input
       value={value ?? ""}
       onChange={onChange}
+      disabled={disabled}
     />
   );
 };

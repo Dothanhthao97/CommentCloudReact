@@ -10,7 +10,7 @@ function ProcessTimeline() {
   const [error, setError] = useState<string | null>(null);
 
   // Khi gửi comment giữ nguyên trạng thái mở/đóng
-  const [isProcessTimeline, setIsProcessTimeline] = useState(false);
+  const [isProcessTimeline, setIsProcessTimeline] = useState(true);
 
   function groupByConsecutiveSteps(items: StepItem[]): GroupedIDStep[] {
     const grouped: GroupedIDStep[] = [];
@@ -42,7 +42,7 @@ function ProcessTimeline() {
   async function getDataComment() {
     // 2) Lấy dữ liệu BẰNG getAPI
     const res: any = await getAPI(
-      `https://dpmclouddev.vuthao.com/support/_layouts/15/FN.DPM.API/Mobile/WorkflowRequest.ashx`,
+      `/support/_layouts/15/FN.DPM.API/Mobile/WorkflowRequest.ashx`,
       {
         func: "getHistory",
         lid: 1066,
@@ -71,7 +71,7 @@ function ProcessTimeline() {
       onToggle={setIsProcessTimeline}
       BoxclassName="ProcessTimeline"
     >
-      <ul className="flex flex-col gap-3.5 pl-4 pt-4">
+      <ul className="flex flex-col gap-3.5 pl-3 pt-4">
         {steps.map((step) => (
           <ProcessStepItem
             key={step.ID}

@@ -1,147 +1,183 @@
-import React, { useState, useEffect } from "react";
-
+// src/components/CommentBox/CommentComposer.tsx
+import React, { useState, useEffect, useRef } from "react";
 import Button from "../ui/Button";
 import BoxReply from "./BoxReply";
 import { ReplyPreview } from "../utils/types";
 import UploadFileButton from "../ui/Upload/UploadFileButton";
 import UploadListFile from "../ui/Upload/UploadListFile";
 import { useCommentComposer } from "../utils/useCommentComposer";
-import TiptapEditor from "../form/ParagraphEditor/TiptapEditor";
+import TiptapEditor from "./ParagraphEditor/TiptapEditor";
 import { AddCommentEnvelope } from "../utils/AddComment-types";
-
+import { useAppSelector } from "../../store/hook";
+import { RootState } from "../../store/store"; // đường dẫn đúng
 interface CommentComposerProps {
   reply?: ReplyPreview | null;
   onCloseReply?: () => void;
   onSend?: (
     content: string,
-    envelope?: AddCommentEnvelope
+    envelope?: AddCommentEnvelope,
+    fileNames?: string[]
   ) => Promise<void> | void;
+  //otherResourceId?: string | null;
 }
 
-const CommentComposer: React.FC<CommentComposerProps> = ({
-  reply,
-  onCloseReply,
-  onSend,
-}) => {
-  const {
-    text,
-    setText,
-    uploaded,
-    richHtml,
-    setRichHtml,
-    isEditorOpen, // <-- lấy từ hook
-    toggleEditor, // <-- lấy từ hook
-    sending,
-    handlePickFiles,
-    removeItem,
-    clearAll,
-    handleSend,
-  } = useCommentComposer({
-    rid: 10470,
-    resourceCategoryId: 8,
-    resourceSubCategoryId: 9,
-    otherResourceId: "5c2c1923-fad9-4c23-94b9-dc96a07c171d",
+import { useLocation } from "react-router-dom";
+import { RichTextEditorRef } from "mui-tiptap";
+import { forwardRef, useImperativeHandle } from "react";
+//import { useMentionOptions } from "./mentionOptions";
+const CommentComposer = forwardRef<RichTextEditorRef, CommentComposerProps>(
+  ({ reply, onCloseReply, onSend }, ref) => {
+    const reduxOtherResourceId = useAppSelector(
+      (state) => state.comment.otherResourceId
+    );
+    const location = useLocation();
+    const query = new URLSearchParams(location.search);
+    const itemId = query.get("ItemId");
+    const listId = query.get("LId");
 
-    onSend,
-    replyId: reply?.id || null,
-  });
+    const {
+      text,
+      setText,
+      uploaded,
+      richHtml,
+      setRichHtml,
+      isEditorOpen,
+      toggleEditor,
+      sending,
+      handlePickFiles,
+      removeItem,
+      clearAll,
+      handleSend,
+    } = useCommentComposer({
+      rid: itemId ? parseInt(itemId, 10) : 0,
+      resourceCategoryId: 8,
+      resourceSubCategoryId: 9,
+      otherResourceId: reduxOtherResourceId ?? undefined,
+      onSend,
+      replyId: reply?.id || null,
+    });
 
-  const [showToolbar, setShowToolbar] = React.useState(false);
-  // const [editorState, setEditorState] = React.useState(
-  //   EditorState.createEmpty()
-  // );
-  // const toggleToolbar = () => {
-  //   setShowToolbar((prev) => !prev);
-  // };
+    const [showToolbar, setShowToolbar] = React.useState(false);
+    const inputRef = React.useRef<RichTextEditorRef>(null);
 
-  const [htmlContent, setHtmlContent] = React.useState("");
-  const [editorKey, setEditorKey] = useState(0);
-  const [content, setContent] = useState("");
+    const [htmlContent, setHtmlContent] = React.useState("");
+    const [editorKey, setEditorKey] = useState(0);
+    const [content, setContent] = useState("");
 
-  const fakeMentions = [
-    { id: "1", label: "Alice", url: "/profile/1" },
-    { id: "2", label: "Bob", url: "/profile/2" },
-    { id: "3", label: "Charlie", url: "/profile/3" },
-  ];
+    // Forward the inputRef to parent
+    useImperativeHandle(ref, () => inputRef.current as RichTextEditorRef, []);
 
-  return (
-    <div className="flex flex-col p-4 mt-3 shadow-md border border-[#eee] rounded-[10px] bg-white w-full">
-      {reply && (
-        <BoxReply
-          FullName={reply.fullName}
-          Created={reply.created}
-          Content={reply.content}
-          onClose={onCloseReply}
-        />
-      )}
+    //Tính chiều cao fixedBoxComment
+    const boxRef = useRef<HTMLDivElement>(null);
 
+    useEffect(() => {
+      const el = boxRef.current;
+      if (!el) return;
+
+      const updateHeight = () => {
+        const height = el.offsetHeight;
+        document.documentElement.style.setProperty(
+          "--height-boxComment",
+          `${height}px`
+        );
+      };
+
+      updateHeight(); // Cập nhật lần đầu
+
+      const observer = new ResizeObserver(() => {
+        updateHeight();
+      });
+
+      observer.observe(el);
+
+      return () => {
+        observer.disconnect(); // Dọn dẹp khi component unmount
+      };
+    }, []);
+
+    return (
       <div
-        id="boxEditorComt"
-        className={`boxEditorComt flex justify-between w-full gap-4 ${
-          reply || isEditorOpen || uploaded.length > 0 ? "flex-col" : ""
-        }`}
+        ref={boxRef}
+        className="fixedBoxComment flex flex-col p-3 mt-3 shadow-md border border-[#eee] rounded-[10px] bg-white w-full"
       >
-        <div className="flex flex-1 flex-col [word-break:break-word]">
-          <TiptapEditor
-            key={editorKey}
-            showToolbar={showToolbar}
-            content={htmlContent}
-            onUpdateContent={(html) => {
-              setRichHtml(html);
-              setHtmlContent(html);
-            }}
-            mentionSuggestions={fakeMentions} // 👈 truyền data giả ở đây
+        {reply && (
+          <BoxReply
+            FullName={reply.fullName}
+            Created={reply.created}
+            Content={reply.content}
+            onClose={onCloseReply}
           />
-        </div>
+        )}
 
         <div
-          className={`flex ${
-            uploaded.length > 0 ? "flex-none ..." : "flex-col ..."
+          id="boxEditorComt"
+          className={`boxEditorComt flex justify-between w-full ${
+            reply || isEditorOpen || uploaded.length > 0
+              ? "flex-col "
+              : "items-center gap-4"
           }`}
         >
-          <UploadListFile
-            items={uploaded}
-            onRemove={removeItem}
-            onClear={clearAll}
-          />
-
-          <div className="flex items-center justify-end gap-4">
-            <Button
-              className={`btn-editor text-[#7D7D7D] hover:text-blue-600 ${
-                isEditorOpen ? "text-blue-600" : ""
-              }`}
-              icon="ic-editor text-[16px]"
-              onClick={() => {
-                toggleEditor();
-                setShowToolbar((prev) => !prev);
+          <div className="flex flex-1 flex-col [word-break:break-word]">
+            <TiptapEditor
+              ref={inputRef}
+              key={editorKey}
+              showToolbar={showToolbar}
+              content={htmlContent}
+              onUpdateContent={(html) => {
+                setRichHtml(html);
+                setHtmlContent(html);
               }}
             />
+          </div>
 
-            <UploadFileButton
-              accept="image/*,.pdf"
-              multiple
-              onPick={handlePickFiles}
+          <div
+            className={`flex gap-4 ${
+              uploaded.length > 0 ? "flex-none justify-between" : "flex-col"
+            }`}
+          >
+            <UploadListFile
+              items={uploaded}
+              onRemove={removeItem}
+              onClear={clearAll}
             />
 
-            <span className="inline-block w-[1px] h-[20px] bg-[#E9E9E9]" />
+            <div className="flex items-center justify-end gap-4">
+              <Button
+                className={`btn-editor text-[#7D7D7D] hover:text-blue-600 ${
+                  isEditorOpen ? "text-blue-600" : ""
+                }`}
+                icon="ic-editor text-[16px]"
+                onClick={() => {
+                  toggleEditor();
+                  setShowToolbar((prev) => !prev);
+                }}
+              />
 
-            <Button
-              className="btn-send p-1 border text-[#3076FF] border-[#3076FF] rounded-[5px] px-9 py-2 bg-white hover:bg-blue-500 hover:text-white"
-              text={sending ? "Đang gửi..." : "Gửi"}
-              icon="ic-send text-[16px]"
-              onClick={() => {
-                console.log("📄 Dữ liệu HTML:", htmlContent);
-                handleSend(htmlContent);
-                setHtmlContent(""); // reset content sau khi gửi
-                setEditorKey((prev) => prev + 1);
-              }}
-              disabled={sending}
-            />
+              <UploadFileButton
+                accept="image/*,.pdf"
+                multiple
+                onPick={handlePickFiles}
+              />
+
+              <span className="inline-block w-[1px] h-[20px] bg-[#E9E9E9]" />
+
+              <Button
+                className="react-btn-send border text-[#3076FF] border-[#3076FF] rounded-[5px] px-9 py-2 hover:bg-blue-500 hover:text-white"
+                text={sending ? "Đang gửi..." : "Gửi"}
+                icon="ic-send text-[16px]"
+                onClick={() => {
+                  handleSend(htmlContent);
+                  setHtmlContent("");
+                  setEditorKey((prev) => prev + 1);
+                }}
+                disabled={sending}
+              />
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+);
 
 export default CommentComposer;

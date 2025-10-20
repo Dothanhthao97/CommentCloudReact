@@ -8,16 +8,20 @@ export type UploadedFileRef = {
   Size?: number;
   ContentType?: string;
 };
-
+export interface PostFile{
+  Name: string;
+  Base64: string;
+}
 // Payload bạn gửi vào API (đặt trong key 'data' dạng JSON string)
 export interface AddCommentPayload {
-  content: string;
+  Content: string;
   replyId?: string;
   attachments?: any[];
   ParentCommentId?: string;
-  resourceCategoryId?: number;
-  resourceSubCategoryId?: number;
-  otherResourceId?: string;
+  ResourceCategoryId?: number;
+  ResourceSubCategoryId?: number;
+  OtherResourceId?: string;
+  Files?: PostFile[]|null; // nếu có gửi file, tuỳ backend yêu cầu
 }
 
 // Envelope API trả về

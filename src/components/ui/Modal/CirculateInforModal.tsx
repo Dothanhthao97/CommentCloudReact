@@ -63,7 +63,7 @@ const CirculateInforModal = () => {
   // Hàm xử lý getAPI
   async function getDataComment() {
     const res: any = await getAPI(
-      `/api-social/qc/_layouts/15/FN.DPM.API/Mobile/WorkflowRequest.ashx`,
+      `/support/_layouts/15/FN.DPM.API/Mobile/WorkflowRequest.ashx`,
       {
         func: "getHistory",
         lid: 1066,

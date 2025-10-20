@@ -3,6 +3,7 @@ import React from "react";
 interface MultilineProps {
   fieldName: string;
   value?: string;
+  disabled?: boolean;
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   rows?: number;
   placeholder?: string;
@@ -11,6 +12,7 @@ interface MultilineProps {
 const Multiline: React.FC<MultilineProps> = ({
   fieldName,
   value,
+  disabled,
   onChange,
   rows = 2,
   placeholder = "",
@@ -20,6 +22,7 @@ const Multiline: React.FC<MultilineProps> = ({
       id={fieldName}
       name={fieldName}
       value={value}
+      disabled={disabled}
       onChange={onChange}
       rows={rows}
       placeholder={placeholder}

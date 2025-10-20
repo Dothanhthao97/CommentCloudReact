@@ -39,13 +39,13 @@ const CommentElement: React.FC<CommentElementProps> = ({
     const funcLike = newLiked ? "like" : "unlike";
     try {
       const response = await PostAPI<{ status: string }>(
-        `/api-social/qc/workflow/_layouts/15/VuThao.BPMOP.Social/Like.ashx?func=${funcLike}`,
+        `/support/workflow/_layouts/15/VuThao.BPMOP.Social/Like.ashx?func=${funcLike}`,
         {
           ResourceId: commentData.ID,
           ResourceCategoryId: 32,
         }
       );
-      console.log("✅ API Response:", response);
+      //console.log("✅ API Response:", response);
       if (response.status !== "SUCCESS") {
         throw new Error("API không thành công");
       }
@@ -69,6 +69,7 @@ const CommentElement: React.FC<CommentElementProps> = ({
 
   // ---- Hiển thị AttachmentFile cha nếu có
   const files: AttachmentFile[] = parseAttachments(commentData?.Image);
+  //console.log("Attachments parsed:", files);
 
   useEffect(() => {
     //console.log("[CommentElement] mounted:", commentData.ID);
@@ -91,7 +92,7 @@ const CommentElement: React.FC<CommentElementProps> = ({
           </a>
         </div>
 
-        <div className="relative w-full ">
+        <div className="relative w-[calc(100%-50px)] ">
           <div className="flex justify-between items-center mb-2.5">
             <div className="flex items-center gap-2.5">
               <a href="#" target="_blank" className="font-bold text-[14px]">
@@ -126,7 +127,7 @@ const CommentElement: React.FC<CommentElementProps> = ({
               ))}
             </div>
 
-            <div className="divGroupBtn inline-flex items-center py-1 px-4 gap-5 rounded-2xl border border-[#EBEBEB] bg-[#fff] shadow-[0_0_5px_0_rgba(0,95,212,0.20)] absolute bottom-[-11px] left-3.5">
+            <div className="divGroupBtn inline-flex items-center py-1 px-3 gap-5 rounded-2xl border border-[#EBEBEB] bg-[#fff] shadow-[0_0_5px_0_rgba(0,95,212,0.20)] absolute bottom-[-11px] left-3.5">
               <Button
                 className="btn-reply text-[#64748B] hover:text-blue-500"
                 icon="ic-forward1 ic-forward-inf scale-x-[-1] scale-y-[-1]"

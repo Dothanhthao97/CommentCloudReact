@@ -1,5 +1,6 @@
 // /src/api/getAPI.ts
-import axios, { AxiosRequestConfig } from "axios";
+import { AxiosRequestConfig } from "axios";
+import axiosClient from "./axiosClient";
 
 export async function getAPI<T = any>(
   url: string,
@@ -7,10 +8,9 @@ export async function getAPI<T = any>(
   config?: AxiosRequestConfig
 ): Promise<T> {
   try {
-    const res = await axios.get<T>(url, {
-      withCredentials: true,
+    const res = await axiosClient.get<T>(url, {
       params,
-      ...config, // cho phép override headers nếu cần
+      ...config, // có thể override headers, v.v.
     });
     return res.data as T;
   } catch (err: any) {

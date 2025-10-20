@@ -1,10 +1,10 @@
 @font-face {
   font-family: 'iconfont';
-  src:  url('./fonts/iconfont.eot?8k2q3l');
-  src:  url('./fonts/iconfont.eot?8k2q3l#iefix') format('embedded-opentype'),
-    url('./fonts/iconfont.ttf?8k2q3l') format('truetype'),
-    url('./fonts/iconfont.woff?8k2q3l') format('woff'),
-    url('./fonts/iconfont.svg?8k2q3l#iconfont') format('svg');
+  src:  url('fonts/iconfont.eot?abl7n3');
+  src:  url('fonts/iconfont.eot?abl7n3#iefix') format('embedded-opentype'),
+    url('fonts/iconfont.ttf?abl7n3') format('truetype'),
+    url('fonts/iconfont.woff?abl7n3') format('woff'),
+    url('fonts/iconfont.svg?abl7n3#iconfont') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
@@ -1128,6 +1128,50 @@
 .ic-zone:before {
   content: "\ea5f";
   color: #28b0ff;
+}
+.ic-file1:before {
+  content: "\ec82";
+  color: #7d7d7d;
+}
+.ic-file-doc:before {
+  content: "\ec83";
+  color: #3076ff;
+}
+.ic-file-excel:before {
+  content: "\ec84";
+  color: #34a853;
+}
+.ic-file-image:before {
+  content: "\ec85";
+  color: #7d7d7d;
+}
+.ic-file-pdf:before {
+  content: "\ec86";
+  color: #eb342e;
+}
+.ic-file-ppt:before {
+  content: "\ec87";
+  color: #ff7043;
+}
+.ic-file-zip:before {
+  content: "\ec88";
+  color: #ffd143;
+}
+.ic-pdf:before {
+  content: "\ec89";
+  color: #3384f9;
+}
+.ic-word:before {
+  content: "\e96f";
+  color: #1565c0;
+}
+.ic-excel:before {
+  content: "\ec80";
+  color: #1f7244;
+}
+.ic-powerpoint:before {
+  content: "\eab6";
+  color: #ff5722;
 }
 .ic-BBBGCV:before {
   content: "\ea60";

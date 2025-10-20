@@ -19,7 +19,13 @@ const UploadFileButton: React.FC<UploadFileButtonProps> = ({
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     const files = Array.from(e.target.files ?? []);
-    if (files.length) onPick(files);
+    if (files.length) {
+      console.log(
+        "Selected files:",
+        files.map((f) => f.name)
+      );
+      onPick(files);
+    }
     e.target.value = ""; // reset để lần sau chọn cùng file vẫn trigger
   };
 

@@ -2,9 +2,9 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface FormFieldItem {
-    parsedOption: any;
-    internalName: string;
-    Title?: string;
+  parsedOption: any;
+  internalName: string;
+  Title?: string;
   // thêm các field bạn cần
 }
 
@@ -18,6 +18,7 @@ interface FormCommentState {
   errorData: string | null;
   ItemID?: number | null;
   ListID?: string | null;
+  otherResourceId?: string | null;
 }
 
 const initialState: FormCommentState = {
@@ -30,6 +31,7 @@ const initialState: FormCommentState = {
   errorData: null,
   ItemID: null,
   ListID: null,
+  otherResourceId: null,
 };
 
 const formCommentSlice = createSlice({
@@ -43,7 +45,10 @@ const formCommentSlice = createSlice({
     },
     fetchFormStructureSuccess(
       state,
-      action: PayloadAction<{ titleForm: string; fieldsGroup: FormFieldItem[][] }>
+      action: PayloadAction<{
+        titleForm: string;
+        fieldsGroup: FormFieldItem[][];
+      }>
     ) {
       state.loadingStructure = false;
       state.titleForm = action.payload.titleForm;
@@ -59,9 +64,13 @@ const formCommentSlice = createSlice({
       state.loadingData = true;
       state.errorData = null;
     },
-    fetchFormDataSuccess(state, action: PayloadAction<any>) {
+    fetchFormDataSuccess(
+      state,
+      action: PayloadAction<{ data: any; otherResourceId: string | null }>
+    ) {
       state.loadingData = false;
-      state.formData = action.payload;
+      state.formData = action.payload.data;
+      state.otherResourceId = action.payload.otherResourceId;
     },
     fetchFormDataFailure(state, action: PayloadAction<string>) {
       state.loadingData = false;
@@ -72,8 +81,7 @@ const formCommentSlice = createSlice({
     },
     fetchSetListID(state, action: PayloadAction<string | null>) {
       state.ListID = action.payload;
-    }
-
+    },
   },
 });
 
@@ -85,7 +93,7 @@ export const {
   fetchFormDataSuccess,
   fetchFormDataFailure,
   fetchSetItemID,
-  fetchSetListID
+  fetchSetListID,
 } = formCommentSlice.actions;
 
 export default formCommentSlice.reducer;

@@ -41,8 +41,8 @@ const BoxReply: React.FC<Props> = (props) => {
   return (
     <div
       className={[
-        "box-reply flex items-start justify-between gap-2.5 flex-wrap max-w-[50%] mb-2.5",
-        "rounded-[5px] bg-white p-3 shadow-[0_0_4px_0_rgba(0,0,0,0.25)] leading-[normal]",
+        "box-reply inline-flex flex-col items-start justify-between gap-2.5 flex-wrap w-fit max-w-[50%] mb-2.5",
+        "rounded-[5px] bg-white p-2.5 shadow-[0_0_4px_0_rgba(0,0,0,0.25)] leading-[normal]",
         animate ? "overflow-hidden transition-all duration-200" : "",
         animate
           ? closing
@@ -54,7 +54,7 @@ const BoxReply: React.FC<Props> = (props) => {
         if (closing) setVisible(false); // ẩn xong -> unmount
       }}
     >
-      <div className="flex items-center justify-between w-full">
+      <div className="flex items-center justify-between w-full gap-2.5">
         <div className="flex items-center gap-2.5">
           <a
             href="#"
@@ -78,9 +78,11 @@ const BoxReply: React.FC<Props> = (props) => {
         />
       </div>
 
-      <div className="inline-block text-[13px] text-[#202020] whitespace-nowrap overflow-hidden text-ellipsis">
+      <div className="block w-full">
         {isPlainText ? (
-          <span>{plainText}</span>
+          <div className="block text-[13px] text-[#202020] whitespace-nowrap overflow-hidden text-ellipsis w-full">
+            {plainText}
+          </div>
         ) : (
           <span dangerouslySetInnerHTML={{ __html: Content }} />
         )}

@@ -5,10 +5,16 @@ import "react-datepicker/dist/react-datepicker.css";
 interface DateTimeProps {
   fieldName: string;
   value?: string;
+  disabled?: boolean;
   onChange?: (value: Date | null) => void;
 }
 
-const DateTime: React.FC<DateTimeProps> = ({ fieldName, value, onChange }) => {
+const DateTime: React.FC<DateTimeProps> = ({
+  fieldName,
+  value,
+  disabled,
+  onChange,
+}) => {
   const parsedDate = value ? new Date(value) : null;
 
   const handleChange = (date: Date | null) => {
@@ -21,6 +27,7 @@ const DateTime: React.FC<DateTimeProps> = ({ fieldName, value, onChange }) => {
     <DatePicker
       selected={parsedDate}
       onChange={handleChange}
+      disabled={disabled}
       showTimeSelect
       dateFormat="Pp"
       className="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-0 focus:border-blue-500"

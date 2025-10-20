@@ -13,6 +13,8 @@ interface FieldBoxProps {
   onChange: (e: any) => void;
   isRequired?: boolean;
   field?: any; // truyền thêm full field để dùng FieldTypeId
+  disabled?: boolean;
+  className?: string; // thêm className để truyền style tuỳ chỉnh nếu cần
 }
 const layoutClassMap: Record<string, string> = {
   verticalForm: "flex flex-col",
@@ -32,6 +34,8 @@ const FieldBox: React.FC<FieldBoxProps> = ({
   onChange,
   isRequired = false,
   field,
+  disabled = false,
+  className,
 }) => {
   // Nếu có field và FieldTypeId, dùng component tương ứng
   const Component =
@@ -42,7 +46,7 @@ const FieldBox: React.FC<FieldBoxProps> = ({
   const layoutClasses = layoutClassMap[formLayout] || "";
   // Render layout tùy chọn (giữ nguyên nếu bạn có định nghĩa cụ thể)
   return (
-    <div className={`${layoutClasses} ${responsiveClasses} `}>
+    <div className={`${layoutClasses} ${responsiveClasses} ${className} `}>
       <label
         className={`block tracking-wide text-gray-700 text-xs mb-2 ${
           labelClasses || ""
@@ -61,15 +65,18 @@ const FieldBox: React.FC<FieldBoxProps> = ({
             onChange({ target: { value: finalValue } });
           }}
           field={field} // truyền thêm field nếu component cần
+          disabled={disabled}
         />
       ) : (
         // Fallback: dùng Input mặc định nếu không có mapping
-        <Input
-          id={fieldName}
-          name={fieldName}
-          value={value}
-          onChange={onChange}
-        />
+        // <Input
+        //   id={fieldName}
+        //   name={fieldName}
+        //   value={value}
+        //   onChange={onChange}
+        //   disabled={disabled}
+        // />
+        ""
       )}
     </div>
   );

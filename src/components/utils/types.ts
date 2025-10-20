@@ -39,8 +39,8 @@ export type UploadedFile = {
   id: string;
   file: File;
   url: string;
+  base64?: string;
 };
-
 
 export interface AddCommentPayload {
   OtherResourceId: string;
@@ -92,7 +92,7 @@ export interface StepItem {
   SubmitAction: string;
   SubmitActionId: number;
   children?: StepItem[];
-};
+}
 export interface GroupedIDStep {
   ID: string;
   Step: number;

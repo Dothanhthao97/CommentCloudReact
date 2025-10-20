@@ -42,7 +42,6 @@ function FormComment() {
   useEffect(() => {
     const itemID = query.get("ItemId"); // chú ý viết hoa chữ I, chữ d thường
     const listID = query.get("LId");
-
     // console.log("ItemID from URL:", itemID);
     // console.log("ListID from URL:", listID);
 
@@ -56,6 +55,17 @@ function FormComment() {
       dispatch(fetchFormDataRequest());
     }
   }, [dispatch, ListID, ItemID]);
+
+  useEffect(() => {
+    if (
+      formData &&
+      formData.ItemInfo &&
+      Object.keys(formData.ItemInfo).length > 0
+    ) {
+      //console.log("✅ Đã lấy được ItemInfo:", formData.ItemInfo);
+      setFormValues(formData.ItemInfo);
+    }
+  }, [formData]);
 
   if (loadingStructure || loadingData) return <p>Đang tải biểu mẫu...</p>;
   if (errorStructure) return <p>Lỗi cấu trúc: {errorStructure}</p>;
@@ -79,6 +89,14 @@ function FormComment() {
                       ? rawValue
                       : rawValue?.Text ?? "";
                   const cleanData = cleanValue(value);
+                  const isReadOnly = field?.parsedOption?.ViewOnly === true;
+                  const extraClass = field?.parsedOption?.StyleClass || "";
+                  // console.log(
+                  //   "🔒 ViewOnly:",
+                  //   field?.parsedOption?.ViewOnly,
+                  //   "→ disabled:",
+                  //   isReadOnly
+                  // );
                   return (
                     <div
                       key={`field-${groupIndex}-${fieldIndex}`}
@@ -97,6 +115,8 @@ function FormComment() {
                         }
                         isRequired={field?.parsedOption?.Require === true}
                         field={field}
+                        disabled={isReadOnly}
+                        className={extraClass}
                       />
                     </div>
                   );

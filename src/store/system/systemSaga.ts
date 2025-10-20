@@ -19,14 +19,15 @@ const getItemID = (state: RootState) => state.formComment.ItemID;
 
 // -- FETCH STRUCTURE -- //
 function* fetchFormStructureSaga(): SagaIterator {
-  try {    
+  try {
     const ListID: string | null = yield select(getListID);
     if (!ListID) {
       yield put(fetchFormStructureFailure("Missing ListID"));
       return;
     }
-    const res = yield call(getAPI,
-      "https://dpmclouddev.vuthao.com/support/_layouts/15/FN.DPM.API/Mobile/WorkflowRequest.ashx",
+    const res = yield call(
+      getAPI,
+      "/support/_layouts/15/FN.DPM.API/Mobile/WorkflowRequest.ashx",
       {
         func: "getFormTemplate",
         lid: 1066,
@@ -34,34 +35,37 @@ function* fetchFormStructureSaga(): SagaIterator {
         deviceType: 1,
       }
     );
-    
-    console.log(">>> Full API response FormStructure:", res.data);
+
+    //console.log(">>> Full API response FormStructure:", res.data);
     const FormDefineInfo = res.data?.InfoCollection?.FormDefineInfo;
-    const FormFieldInfo = res.data?.FormFieldInfo;  
-    console.log(">>> FormDefineInfo:", FormFieldInfo);
+    const FormFieldInfo = res.data?.FormFieldInfo;
+    //console.log(">>> FormDefineInfo:", FormFieldInfo);
 
     // Step 1: Map field name => field detail
     const fieldInfoMap = new Map<string, any>();
     FormFieldInfo.forEach((field: any, index: number) => {
-        const title = field?.Title || "(no title)";
-        const name = field?.Name || "(no name)";
-        const rawOption = field?.Option;
+      const title = field?.Title || "(no title)";
+      const name = field?.Name || "(no name)";
+      const rawOption = field?.Option;
 
-        if (!rawOption) {
-            //console.warn(`[#${index}] Field: ${title} (${name}) không có Option`);
-            return;
-        }
+      if (!rawOption) {
+        //console.warn(`[#${index}] Field: ${title} (${name}) không có Option`);
+        return;
+      }
 
-        try {
-            const parsedOption = JSON.parse(rawOption);
-            fieldInfoMap.set(name, {
-                ...field,
-                parsedOption,
-            });
-            //console.log(`[#${index}] Field: ${title} (${name}) => Require: ${parsedOption.Require}`);
-        } catch (err) {
-            console.error(`[#${index}] Lỗi parse Option cho field: ${title} (${name})`, err);
-        }
+      try {
+        const parsedOption = JSON.parse(rawOption);
+        fieldInfoMap.set(name, {
+          ...field,
+          parsedOption,
+        });
+        //console.log(`[#${index}] Field: ${title} (${name}) => Require: ${parsedOption.Require}`);
+      } catch (err) {
+        console.error(
+          `[#${index}] Lỗi parse Option cho field: ${title} (${name})`,
+          err
+        );
+      }
     });
 
     let titleForm = "";
@@ -71,30 +75,34 @@ function* fetchFormStructureSaga(): SagaIterator {
       try {
         const parsed = JSON.parse(FormDefineInfo);
         titleForm = parsed?.[0]?.titleForm || "";
-        const rowDefineInfoCollection = parsed?.[0]?.rowDefineInfoCollection || [];
+        const rowDefineInfoCollection =
+          parsed?.[0]?.rowDefineInfoCollection || [];
 
         const excludedFields = ["_17", "_18", "_19", "YKien"];
 
         // Step 2: Filter groups (loại bỏ group chứa các field không cần thiết)
-        const filteredGroups = rowDefineInfoCollection.filter((group: any[]) =>
-          !group.some((field) =>
-            excludedFields.some((prefix) => field.internalName?.startsWith(prefix))
-          )
-        );        
+        const filteredGroups = rowDefineInfoCollection.filter(
+          (group: any[]) =>
+            !group.some((field) =>
+              excludedFields.some((prefix) =>
+                field.internalName?.startsWith(prefix)
+              )
+            )
+        );
 
         // // Step 3: Gộp thêm thông tin chi tiết vào từng field
         fieldsGroup = filteredGroups.map((group: any[]) =>
-            group.map((field: any) => {
-                const matchKey = field.internalName || field.Name;
-                const matchingField = fieldInfoMap.get(matchKey);
-                
-                return {
-                ...field,
-                ...(matchingField || {}), // an toàn hơn khi matchingField = undefined
-                };
-            })
-          );
-        console.log("Field after merge:", fieldsGroup?.[0]?.[0]);   
+          group.map((field: any) => {
+            const matchKey = field.internalName || field.Name;
+            const matchingField = fieldInfoMap.get(matchKey);
+
+            return {
+              ...field,
+              ...(matchingField || {}), // an toàn hơn khi matchingField = undefined
+            };
+          })
+        );
+        console.log("Field after merge:", fieldsGroup?.[0]?.[0]);
         console.log("fieldsGroup:", fieldsGroup);
       } catch (error) {
         yield put(fetchFormStructureFailure("Lỗi parse dữ liệu cấu trúc form"));
@@ -102,24 +110,37 @@ function* fetchFormStructureSaga(): SagaIterator {
       }
     }
 
-    yield put(fetchFormStructureSuccess({ titleForm, fieldsGroup }));
+    yield put(
+      fetchFormStructureSuccess({
+        titleForm,
+        fieldsGroup,
+      })
+    );
   } catch (error: any) {
-    yield put(fetchFormStructureFailure(error.message || "Lỗi tải cấu trúc form"));
+    yield put(
+      fetchFormStructureFailure(error.message || "Lỗi tải cấu trúc form")
+    );
   }
-  
 }
 
 // -- FETCH DATA -- //
 function* fetchFormDataSaga(): SagaIterator {
+  console.log(">>> fetchFormStructureSaga bắt đầu");
   try {
+    const state: RootState = yield select();
+    console.log("📦 Redux State trong saga:", state.formComment);
+
     const ItemID: number | null = yield select(getItemID);
-    console.log("DEBUG - ListID trong fetchFormStructureSaga:", ItemID);
+    console.log("✅ Saga chạy - RId from redux:", ItemID);
+
     if (!ItemID) {
       yield put(fetchFormDataFailure("Missing ItemID"));
       return;
     }
-    const res = yield call(getAPI,
-      "https://dpmclouddev.vuthao.com/support/_layouts/15/FN.DPM.API/Mobile/WorkflowRequest.ashx",
+
+    const res = yield call(
+      getAPI,
+      "/support/_layouts/15/FN.DPM.API/Mobile/WorkflowRequest.ashx",
       {
         func: "getFormData",
         lid: 1066,
@@ -127,8 +148,16 @@ function* fetchFormDataSaga(): SagaIterator {
       }
     );
     console.log(">>> API res.data FormData:", res.data);
+    const OtherResourceIdFromApi = res.data?.FormConfig.OtherResourceId || null;
 
-    yield put(fetchFormDataSuccess(res.data));
+    console.log(">>> OtherResourceIdFromApi:", OtherResourceIdFromApi);
+
+    yield put(
+      fetchFormDataSuccess({
+        data: res.data,
+        otherResourceId: OtherResourceIdFromApi,
+      })
+    );
   } catch (error: any) {
     yield put(fetchFormDataFailure(error.message || "Lỗi tải dữ liệu form"));
   }

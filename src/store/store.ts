@@ -5,11 +5,12 @@ import formCommentReducer from "./system/systemSlice";
 import rootSaga from "./rootSaga";
 import loginSlice from "../services/login/loginSlice";
 import commentSlice from "../components/CommentBox/commentSlice";
-
+import systemReducer from "./system/systemSlice";
 const sagaMiddleware = createSagaMiddleware();
 
 const store = configureStore({
   reducer: {
+    system: systemReducer,
     formComment: formCommentReducer,
     login: loginSlice,
     comment: commentSlice,
