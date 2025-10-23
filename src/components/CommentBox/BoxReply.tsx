@@ -41,7 +41,7 @@ const BoxReply: React.FC<Props> = (props) => {
   return (
     <div
       className={[
-        "box-reply inline-flex flex-col items-start justify-between gap-2.5 flex-wrap w-fit max-w-[50%] mb-2.5",
+        "box-reply inline-flex flex-col items-start justify-between gap-2.5 flex-wrap w-fit md:max-w-[50%] max-w-full mb-2.5",
         "rounded-[5px] bg-white p-2.5 shadow-[0_0_4px_0_rgba(0,0,0,0.25)] leading-[normal]",
         animate ? "overflow-hidden transition-all duration-200" : "",
         animate

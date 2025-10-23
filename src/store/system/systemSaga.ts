@@ -36,10 +36,10 @@ function* fetchFormStructureSaga(): SagaIterator {
       }
     );
 
-    //console.log(">>> Full API response FormStructure:", res.data);
+    console.log(">>> Full API response FormStructure:", res.data);
     const FormDefineInfo = res.data?.InfoCollection?.FormDefineInfo;
     const FormFieldInfo = res.data?.FormFieldInfo;
-    //console.log(">>> FormDefineInfo:", FormFieldInfo);
+    console.log(">>> FormDefineInfo:", FormFieldInfo);
 
     // Step 1: Map field name => field detail
     const fieldInfoMap = new Map<string, any>();
@@ -147,10 +147,10 @@ function* fetchFormDataSaga(): SagaIterator {
         rid: ItemID, // 👈 bạn có thể truyền từ action nếu muốn động
       }
     );
-    console.log(">>> API res.data FormData:", res.data);
+    //console.log(">>> API res.data FormData:", res.data);
     const OtherResourceIdFromApi = res.data?.FormConfig.OtherResourceId || null;
 
-    console.log(">>> OtherResourceIdFromApi:", OtherResourceIdFromApi);
+    //console.log(">>> OtherResourceIdFromApi:", OtherResourceIdFromApi);
 
     yield put(
       fetchFormDataSuccess({

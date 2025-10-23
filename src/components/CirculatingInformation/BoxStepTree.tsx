@@ -26,24 +26,26 @@ const BoxStepItem: React.FC<BoxStepItemProps> = ({
         style={{ paddingLeft: `${level * 16}px` }}
         className={`mt-3.5`}
       >
-        <div className="flex justify-between items-center">
-          <div className="flex items-center gap-2">
+        <div className="flex gap-2 justify-between items-center w-full">
+          {/* LEFT */}
+          <div className="flex items-center gap-2 flex-1 min-w-0">
             <img
               src={user.AssignUserAvatar}
               alt="avatar"
               className="w-8 h-8 rounded-full object-cover"
             />
-            <div className="flex flex-col">
-              <p className="text-sm font-medium text-[#202020]">
+            <div className="flex flex-col min-w-0 max-w-[calc(100%-40px)]">
+              <p className="text-sm font-medium text-[#202020] truncate">
                 {user.AssignUserName}
               </p>
-              <span className="text-xs text-[#6d6d6d] text-[11px]">
-                {user.FromPositionTitle}
+              <span className="text-xs text-[#6d6d6d] text-[11px] truncate">
+                {user.AssignPositionTitle}
               </span>
             </div>
           </div>
 
-          <div className="flex gap-1 flex-col">
+          {/* RIGHT */}
+          <div className="flex gap-1 flex-col flex-shrink-0 items-end">
             <span
               className={`text-xs text-center whitespace-nowrap rounded-[5px] py-[3px] px-[20px] text-[12px] ${GetSubmitActionBgClass(
                 user.Status,

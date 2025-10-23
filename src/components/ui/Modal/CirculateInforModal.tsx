@@ -3,6 +3,9 @@ import Table from "../Table/Table";
 import { getAPI } from "../../../services/api/GetAPI";
 import CirculateTableRow from "./CirculateTableRow";
 import { StepItem } from "../../utils/types";
+import { SagaIterator } from "redux-saga";
+import { select, call } from "redux-saga/effects";
+import { RootState } from "../../../store/rootSaga";
 
 type DataTreeNode = {
   ID: string;
@@ -25,6 +28,7 @@ const CirculateInforModal = () => {
   const [parentSteps, setParentSteps] = useState<any[]>([]);
   const [error, setError] = useState<string | null>(null);
   const [rootSteps, setRootSteps] = useState<StepItem[]>([]);
+  const getItemID = (state: RootState) => state.system.ItemID;
 
   // Hàm xử lý class theo status
   const GetSubmitActionBgClass = (status: number, submitActionId: number) => {
@@ -67,10 +71,10 @@ const CirculateInforModal = () => {
       {
         func: "getHistory",
         lid: 1066,
-        rid: 124818,
+        rid: getItemID,
       }
     );
-    console.log("API popup Thông tin luân chuyển:", res);
+    //console.log("API popup Thông tin luân chuyển:", res);
 
     if (res?.status !== "SUCCESS") {
       setError(res?.mess?.Value || "Không có dữ liệu");

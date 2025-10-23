@@ -85,7 +85,9 @@ const ProcessStepItem: React.FC<ProcessStepProps> = ({
           )}`}
           title="No process"
         ></div>
-        <div className="font-semibold text-[16px] text-black">{Title}</div>
+        <div className="font-semibold text-[16px] text-black truncate">
+          {Title}
+        </div>
       </div>
 
       <div className="pl-[30px]">

@@ -92,7 +92,9 @@ const CommentBox = () => {
           title={`Bình luận (${comments.length})`}
           isOpen={isFormCommentOpen}
           onToggle={setIsFormCommentOpen}
-          BoxclassName={`BoxComment ${isFormCommentOpen ? "" : "collapsed"}`}
+          BoxclassName={`BoxComment ${
+            isFormCommentOpen && comments.length > 0 ? "" : "collapsed"
+          }${comments.length === 0 ? " noneComment" : ""}`}
         >
           <div className="flex flex-col flex-1 ">
             {comments.map((c) => (

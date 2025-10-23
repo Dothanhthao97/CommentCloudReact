@@ -9,9 +9,12 @@
 .boxEditorComt .MuiTiptap-RichTextField-menuBar{border-bottom: 0}
 .boxEditorComt .MuiTiptap-MenuSelect-tooltip .MuiTiptap-MenuSelectHeading-root{border: 1px solid #eee;border-radius: 5px}
 .boxEditorComt .MuiTiptap-MenuSelect-tooltip .MuiTiptap-MenuSelectHeading-root:hover{border-color: var(--color-blue-600)}
-.boxEditorComt .tiptap p:first-child:last-child{height: 100%;padding-block:4px;}
+.boxEditorComt .tiptap p:first-child:last-child{height: 100%;padding-block:4px;line-height:normal;}
 .boxEditorComt.flex-col .MuiTiptap-RichTextContent-root.MuiTiptap-RichTextField-content{height: unset;margin-top: 5px}
-.boxEditorComt.flex-col .tiptap p{padding-top:10px;}
+.boxEditorComt.flex-col .tiptap h1{color: #262626;}
+.boxEditorComt.flex-col .tiptap p{padding-block:5px;line-height:normal;}
+.boxEditorComt.flex-col .tiptap p:first-child{padding-top:10px}
+.boxEditorComt.flex-col .tiptap p:last-child{padding-bottom:10px}
 .boxEditorComt .css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline{border-width: 0;}
 .boxEditorComt .MuiTiptap-MenuSelectHeading-root .MuiSelect-select{padding-block: 1px}
 .boxEditorComt .css-2rzjok-MuiTiptap-MenuButton-root.css-2rzjok-MuiTiptap-MenuButton-root .MuiToggleButton-root{padding: 3px}

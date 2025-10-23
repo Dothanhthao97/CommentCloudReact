@@ -3,14 +3,15 @@ import ProcessStepItem from "./ProcessStepItem";
 import { getAPI } from "../../services/api/GetAPI";
 import HeaderToggle from "../ui/Toggle/HeaderToggle";
 import { GroupedIDStep, StepItem } from "../utils/types";
+import { RootState } from "../../store/rootSaga";
+import { useSelector } from "react-redux";
 
 function ProcessTimeline() {
   const [steps, setSteps] = useState<GroupedIDStep[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
-
-  // Khi gửi comment giữ nguyên trạng thái mở/đóng
   const [isProcessTimeline, setIsProcessTimeline] = useState(true);
+  const itemID = useSelector((state: RootState) => state.system.ItemID);
 
   function groupByConsecutiveSteps(items: StepItem[]): GroupedIDStep[] {
     const grouped: GroupedIDStep[] = [];
@@ -46,7 +47,7 @@ function ProcessTimeline() {
       {
         func: "getHistory",
         lid: 1066,
-        rid: 25927,
+        rid: itemID,
       }
     );
     //console.log("API Thông tin luân chuyển:", res);

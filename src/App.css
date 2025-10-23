@@ -2,3 +2,5 @@
 .beforeGreen, .beforeGreen::before{color: #77E075 !important}
 .beforeRed, .beforeRed::before{color: #FF6B6B !important}
 
+.BoxComment.noneComment >.border-b{border-bottom-width:0}
+

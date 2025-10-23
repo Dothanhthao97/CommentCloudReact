@@ -30,6 +30,9 @@ const UploadListFile: React.FC<Props> = ({ items, onRemove, onClear }) => {
       case "ppt":
       case "pptx":
         return "ic-ppt";
+      case "svg":
+      case "ico":
+        return "ic-file-image";
       default:
         return "ic-attach";
     }
@@ -52,7 +55,7 @@ const UploadListFile: React.FC<Props> = ({ items, onRemove, onClear }) => {
           >
             {isImage ? (
               <div className="flex items-center gap-2 w-full">
-                <div className="w-[60px] h-[60px] rounded-md overflow-hidden">
+                <div className="w-[50px] h-[50px] rounded-md overflow-hidden">
                   <img
                     src={it.url}
                     alt={it.file.name}

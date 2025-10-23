@@ -38,6 +38,7 @@ Options) {
   const reduxOtherResourceId = useAppSelector(
     (state) => state.comment.otherResourceId
   );
+  //console.log(">>>reduxOtherResourceId:", reduxOtherResourceId);
 
   const [text, setText] = React.useState("");
   const [uploaded, setUploaded] = React.useState<UploadedFile[]>([]);
