@@ -47,7 +47,7 @@ const ProcessStepItem: React.FC<ProcessStepProps> = ({
       map.set(String(user.ID), { ...user, children: [] });
     });
 
-    // Bước 2: Gắn children và phân loại node gốc
+    // Bước 2: Gắn children và phân loại node gốc0
     users.forEach((user) => {
       const parentId = user.ParentId;
       const currentUser = map.get(String(user.ID));
