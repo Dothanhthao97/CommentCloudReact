@@ -196,6 +196,7 @@ Options) {
       replyId,
       onSend,
       clearAll,
+      uploaded,
     ]
   );
 

@@ -42,7 +42,7 @@ const UploadListFile: React.FC<Props> = ({ items, onRemove, onClear }) => {
     ["jpg", "jpeg", "png", "gif", "bmp", "webp"].includes(ext);
 
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="divFileAttach flex flex-wrap gap-2">
       {items.map((it) => {
         const ext = getFileExtension(it.file.name);
         const isImage = isImageFile(ext);
@@ -66,7 +66,7 @@ const UploadListFile: React.FC<Props> = ({ items, onRemove, onClear }) => {
                 {/* <span className="truncate text-[12px]">{it.file.name}</span> */}
               </div>
             ) : (
-              <div className="flex items-center gap-2 px-2 py-1 text-[12px]">
+              <div className="flex items-center gap-2 px-2 py-1 text-[12px] w-full">
                 <span className={`${iconClass} text-[14px]`} />
                 <span className="truncate">{it.file.name}</span>
               </div>

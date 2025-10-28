@@ -69,7 +69,7 @@ const CommentElement: React.FC<CommentElementProps> = ({
 
   // ---- Hiển thị AttachmentFile cha nếu có
   const files: AttachmentFile[] = parseAttachments(commentData?.Image);
-  //console.log("Attachments parsed:", files);
+  //console.log("Attachments parsed:", allComments);
 
   useEffect(() => {
     //console.log("[CommentElement] mounted:", commentData.ID);
@@ -79,25 +79,19 @@ const CommentElement: React.FC<CommentElementProps> = ({
     <>
       <div className="flex gap-2.5 py-3">
         <div>
-          <a
-            href="#"
-            target="_blank"
-            className="inline-block w-[40px] h-[40px] rounded-4xl bg-[#e8e8e8] overflow-hidden"
-          >
+          <div className="inline-block w-[40px] h-[40px] rounded-4xl bg-[#e8e8e8] overflow-hidden">
             <img
               className="object-cover max-w-full h-full"
               src={commentData?.ImagePath || ""} // Sử dụng thông tin user
               alt={commentData?.Name || "User"}
             />
-          </a>
+          </div>
         </div>
 
         <div className="relative w-[calc(100%-50px)] ">
           <div className="flex justify-between items-center mb-2.5">
             <div className="flex items-center gap-2.5">
-              <a href="#" target="_blank" className="font-bold text-[14px]">
-                {commentData.Name}
-              </a>
+              <div className="font-bold text-[14px]">{commentData.Name}</div>
               <span className="text-[#6D6D6D] text-[11px]">
                 {commentData.PositionName}
               </span>
@@ -117,7 +111,7 @@ const CommentElement: React.FC<CommentElementProps> = ({
               />
             )}
 
-            <div className="des text-[13px] text-[#202020]">
+            <div className="des text-[13px] text-[#202020] w-full">
               <p
                 className="mb-2.5"
                 dangerouslySetInnerHTML={{ __html: commentData.Content }}
