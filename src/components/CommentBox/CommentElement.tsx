@@ -81,6 +81,10 @@ const CommentElement: React.FC<CommentElementProps> = ({
         <div>
           <div className="inline-block w-[40px] h-[40px] rounded-4xl bg-[#e8e8e8] overflow-hidden">
             <img
+              onError={(e) => {
+                e.currentTarget.onerror = null;
+                e.currentTarget.src = `${window.location.origin}/support/_layouts/15/images/VuThao.BPMOP.eOffice/avarta-default.png`;
+              }}
               className="object-cover max-w-full h-full"
               src={commentData?.ImagePath || ""} // Sử dụng thông tin user
               alt={commentData?.Name || "User"}
