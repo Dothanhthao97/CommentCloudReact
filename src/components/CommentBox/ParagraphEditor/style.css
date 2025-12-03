@@ -9,14 +9,15 @@
 .boxEditorComt .MuiTiptap-RichTextField-menuBar{border-bottom: 0}
 .boxEditorComt .MuiTiptap-MenuSelect-tooltip .MuiTiptap-MenuSelectHeading-root{border: 1px solid #eee;border-radius: 5px}
 .boxEditorComt .MuiTiptap-MenuSelect-tooltip .MuiTiptap-MenuSelectHeading-root:hover{border-color: var(--color-blue-600)}
+.boxEditorComt .tiptap p{font-size:13px;}
 .boxEditorComt .tiptap p:first-child:last-child{height: 100%;padding-block:4px;line-height:normal;}
 .boxEditorComt.flex-col .MuiTiptap-RichTextContent-root.MuiTiptap-RichTextField-content{height: unset;margin-top: 5px}
 .boxEditorComt.flex-col .tiptap h1{color: #262626;}
 .boxEditorComt.flex-col .tiptap p{padding-block:5px;line-height:normal;}
-.boxEditorComt.flex-col .tiptap p:first-child{padding-top:10px}
+.boxEditorComt.flex-col .tiptap p:first-child{padding-top:0}
 .boxEditorComt.flex-col .tiptap p:last-child{padding-bottom:10px}
 .boxEditorComt .css-18p5xg2-MuiNotchedOutlined-root-MuiOutlinedInput-notchedOutline{border-width: 0;}
-.boxEditorComt .MuiTiptap-MenuSelectHeading-root .MuiSelect-select{padding-block: 1px}
+.boxEditorComt .MuiTiptap-MenuSelectHeading-root .MuiSelect-select{padding-block: 1px;align-items: center;display:flex;min-height:30px;}
 .boxEditorComt .css-2rzjok-MuiTiptap-MenuButton-root.css-2rzjok-MuiTiptap-MenuButton-root .MuiToggleButton-root{padding: 3px}
 .boxEditorComt .css-1q1o5op-MuiTiptap-RichTextContent-root .ProseMirror [data-type="mention"]{padding-block: 3px}
 .boxEditorComt .css-1q1o5op-MuiTiptap-RichTextContent-root .ProseMirror ul, .boxEditorComt .css-1q1o5op-MuiTiptap-RichTextContent-root .ProseMirror ol {
@@ -36,4 +37,6 @@ div.tippy-box{background: #fff;color: #5a5a5a;box-shadow: 2px 1px 5px rgb(0 0 0 
 .tippy-box .tippy-content .mention-item.highlighted {background-color: var(--color-blue-500); color: #fff; }
 .tippy-box .tippy-content .mention-item.selected { background-color: var(--color-blue-600); color: #fff; }
 /* Base styles for Tiptap editor */
-
+.MuiTiptap-MenuBar-root + .MuiTiptap-RichTextContent-root .tiptap>p:first-child{padding-top: 10px}
+.is-empty.tiptap-placeholder::before {content: attr(data-placeholder);opacity: .6;pointer-events: none;font-size: 13px;font-style: italic;font-family: var(--font-family);}
+.ProseMirror-focused .is-empty.tiptap-placeholder::before{display: none}
