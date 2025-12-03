@@ -31,8 +31,8 @@ const CommentBox = () => {
   const location = useLocation();
   const query = new URLSearchParams(location.search);
   // const query = useQuery();
-  const itemId = query.get("ItemId");
-  const listId = query.get("LId");
+  const itemId = query.get("ItemId") || query.get("ItemID");
+  const listId = query.get("LId") || query.get("ListID");
   const inputRef = React.useRef<RichTextEditorRef>(null);
 
   // console.log("ItemID from URL:", itemId);

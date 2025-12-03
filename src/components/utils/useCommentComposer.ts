@@ -24,12 +24,14 @@ type Options = CommentContext & {
   ) => Promise<void> | void;
   preferHtml?: boolean;
   replyId?: string | null;
+  otherResourceId?: string | undefined;
 };
 
 export function useCommentComposer({
   rid,
   resourceCategoryId,
   resourceSubCategoryId,
+  otherResourceId, 
   onSend,
   preferHtml = false,
   replyId,
@@ -38,7 +40,8 @@ Options) {
   const reduxOtherResourceId = useAppSelector(
     (state) => state.comment.otherResourceId
   );
-  //console.log(">>>reduxOtherResourceId:", reduxOtherResourceId);
+  //console.log(">>>reduxOtherResourceId:", reduxOtherResourceId)
+
 
   const [text, setText] = React.useState("");
   const [uploaded, setUploaded] = React.useState<UploadedFile[]>([]);
@@ -93,6 +96,16 @@ Options) {
     });
   }, []);
 
+  const finalOtherResourceId = reduxOtherResourceId ?? otherResourceId ?? undefined;
+    // console.log(">>>rid:", rid);
+    // console.log({
+    //   rid,
+    //   resourceCategoryId,
+    //   resourceSubCategoryId,
+    //   finalOtherResourceId,
+    //   replyId,
+    // });
+
   React.useEffect(() => () => revokeAll(uploaded), [uploaded]);
 
   const handleSend = React.useCallback(
@@ -107,15 +120,30 @@ Options) {
           : isEditorOpen
           ? htmlToPlain(richHtml)
           : text);
+      const isContentEmpty = (htmlOrText: string) => {
+        const plain = htmlToPlain(htmlOrText || "");
+        return !plain.trim();
+      };
 
-      if (!content?.trim()) return;
+      if (isContentEmpty(content)) {
+        alert("Vui lòng nhập nội dung bình luận trước khi gửi.");
+        return;
+      }
+
+      // 🔥 Kiểm tra người dùng chỉ upload file nhưng không ghi bình luận
+      // if (!content?.trim()) {
+      //   if (uploaded.length > 0) {
+      //     alert("Vui lòng nhập nội dung bình luận trước khi gửi.");
+      //   }
+      //   return;
+      // }
 
       try {
         setSending(true);
 
         const payload: AddCommentPayload = {
           Content: content,
-          OtherResourceId: reduxOtherResourceId ?? undefined, // ưu tiên lấy từ redux
+          OtherResourceId: finalOtherResourceId, // ưu tiên lấy từ redux
           ParentCommentId: replyId || undefined,
           ResourceCategoryId: resourceCategoryId,
           ResourceSubCategoryId: resourceSubCategoryId,
@@ -143,7 +171,8 @@ Options) {
         //     Base64: f.base64?.split(",")[1] || "",
         //   }))
         // );
-        if (!reduxOtherResourceId) {
+                
+        if (!finalOtherResourceId) {
           console.warn("Thiếu otherResourceId, không thể gửi bình luận.");
           return;
         }
