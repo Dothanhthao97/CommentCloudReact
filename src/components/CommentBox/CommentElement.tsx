@@ -75,6 +75,18 @@ const CommentElement: React.FC<CommentElementProps> = ({
     //console.log("[CommentElement] mounted:", commentData.ID);
   }, [commentData.ID]);
 
+  function formatDate(dateString: string) {
+    const d = new Date(dateString);
+
+    const day = String(d.getDate()).padStart(2, "0");
+    const month = String(d.getMonth() + 1).padStart(2, "0");
+    const year = String(d.getFullYear()).slice(-2); // 2 số cuối
+    const hours = String(d.getHours()).padStart(2, "0");
+    const minutes = String(d.getMinutes()).padStart(2, "0");
+
+    return `${day}/${month}/${year} ${hours}:${minutes}`;
+  }
+
   return (
     <>
       <div className="flex gap-2.5 py-3">
@@ -101,7 +113,7 @@ const CommentElement: React.FC<CommentElementProps> = ({
               </span>
             </div>
             <div className="text-[#6D6D6D] text-[12px]">
-              {new Date(commentData.Created).toLocaleString()}
+              {formatDate(commentData.Created)}
             </div>
           </div>
 
