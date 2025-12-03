@@ -32,8 +32,11 @@ const CommentComposer = forwardRef<RichTextEditorRef, CommentComposerProps>(
     );
     const location = useLocation();
     const query = new URLSearchParams(location.search);
-    const itemId = query.get("ItemId");
-    const listId = query.get("LId");
+    const itemId = query.get("ItemId") || query.get("ItemID");
+    const listId = query.get("LId") || query.get("ListID");
+    if (!itemId) {
+      console.warn("ItemId thiếu trong query string, không thể gửi comment.");
+    }
 
     const {
       text,
@@ -50,6 +53,7 @@ const CommentComposer = forwardRef<RichTextEditorRef, CommentComposerProps>(
       handleSend,
     } = useCommentComposer({
       rid: itemId ? parseInt(itemId, 10) : 0,
+
       resourceCategoryId: 8,
       resourceSubCategoryId: 9,
       otherResourceId: reduxOtherResourceId ?? undefined,
