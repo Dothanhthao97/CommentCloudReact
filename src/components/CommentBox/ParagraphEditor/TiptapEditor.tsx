@@ -2,6 +2,7 @@ import React, { forwardRef, useImperativeHandle, useRef } from "react";
 import StarterKit from "@tiptap/starter-kit";
 import Mention from "@tiptap/extension-mention";
 import TextAlign from "@tiptap/extension-text-align";
+import Placeholder from "@tiptap/extension-placeholder";
 import "./style.css";
 
 import {
@@ -161,6 +162,11 @@ const TiptapEditor = forwardRef<RichTextEditorRef, TiptapEditorProps>(
                 render: mentionSuggestionRenderer,
               },
             }),
+
+            Placeholder.configure({
+              placeholder: "Nhập bình luận...",
+              emptyEditorClass: "tiptap-placeholder",
+            })
           ]}
           onUpdate={({ editor }) => {
             onUpdateContent(editor.getHTML());
