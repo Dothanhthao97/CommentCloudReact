@@ -3,6 +3,9 @@ import StarterKit from "@tiptap/starter-kit";
 import Mention from "@tiptap/extension-mention";
 import TextAlign from "@tiptap/extension-text-align";
 import Placeholder from "@tiptap/extension-placeholder";
+import Image from "@tiptap/extension-image";
+import { FileHandler } from "./FileHandler";
+
 import "./style.css";
 
 import {
@@ -166,7 +169,12 @@ const TiptapEditor = forwardRef<RichTextEditorRef, TiptapEditorProps>(
             Placeholder.configure({
               placeholder: "Nhập bình luận...",
               emptyEditorClass: "tiptap-placeholder",
-            })
+            }),
+            Image.configure({
+              allowBase64: true, // nếu bạn muốn paste ảnh dạng base64
+            }),  
+            FileHandler,
+
           ]}
           onUpdate={({ editor }) => {
             onUpdateContent(editor.getHTML());
