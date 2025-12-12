@@ -8,12 +8,33 @@ type Props = BoxReplyProps & {
   animate?: boolean; // bật/tắt animation
 };
 
+// Kiểm tra xem có phải HTML thật hay không (markup)
+const isRealHtml = (input: string) => {
+  if (!input) return false;
+
+  // Nếu string chứa &lt; &gt; thì chắc chắn KHÔNG phải HTML thật
+  if (input.includes("&lt;") || input.includes("&gt;")) return false;
+
+  const doc = new DOMParser().parseFromString(input, "text/html");
+
+  // HTML thật nếu có ít nhất 1 ELEMENT_NODE
+  return Array.from(doc.body.childNodes).some(
+    (node) => node.nodeType === 1
+  );
+};
+
+// Loại bỏ thẻ HTML → lấy text
+const stripHtml = (html: string) => {
+  const div = document.createElement("div");
+  div.innerHTML = html;
+  return div.textContent || div.innerText || "";
+};
+
 const BoxReply: React.FC<Props> = (props) => {
   const {
     FullName,
     Created,
     Content,
-    isPlainText = true,
     onClose,
     defaultOpen = true,
     animate = true,
@@ -22,14 +43,6 @@ const BoxReply: React.FC<Props> = (props) => {
   const [visible, setVisible] = useState(defaultOpen); // khi false -> unmount
   const [closing, setClosing] = useState(false);
 
-  const plainText = isPlainText
-    ? Content.replace(/<[^>]*>/g, "")
-        .replace(/@/g, "")
-        .replace(/&nbsp;/g, " ")
-        .replace(/\s+/g, " ")
-        .trim()
-    : Content;
-
   if (!visible) return null;
 
   const handleClose = () => {
@@ -37,6 +50,10 @@ const BoxReply: React.FC<Props> = (props) => {
     if (animate) setClosing(true);
     else setVisible(false);
   };
+
+   // Tự động phân loại nội dung
+  const realHtml = isRealHtml(Content);
+  const plainText = realHtml ? stripHtml(Content) : Content;
 
   return (
     <div
@@ -79,12 +96,14 @@ const BoxReply: React.FC<Props> = (props) => {
       </div>
 
       <div className="block w-full">
-        {isPlainText ? (
+        {realHtml ? (
+          // TH: nội dung là HTML thật (h3, p, strong...) → bỏ tag, hiển thị text
           <div className="block text-[13px] text-[#202020] whitespace-nowrap overflow-hidden text-ellipsis w-full">
             {plainText}
           </div>
         ) : (
-          <span dangerouslySetInnerHTML={{ __html: Content }} />
+          // TH: nội dung là text có <script> hoặc html thô → hiển thị nguyên dạng
+          <span className="textHtml" dangerouslySetInnerHTML={{ __html: Content }} />
         )}
       </div>
     </div>
